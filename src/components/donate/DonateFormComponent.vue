@@ -1,6 +1,6 @@
 <template>
   <div class="form-content">
-    <h1>Do a don</h1>
+    <h1 class="text-center">Apoia o DevCurumin aí!</h1>
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="nickname">Nickname:</label>
@@ -17,7 +17,6 @@
       <button type="submit">Donate</button>
     </form>
   </div>
-
 </template>
 
 <script lang="ts">

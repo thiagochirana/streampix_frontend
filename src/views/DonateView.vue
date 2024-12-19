@@ -1,12 +1,12 @@
 <template>
-  <div class="card">
-    <div class="DonateField" v-if="!donationResult">
+  <div class="flex justify-center pt-10 phone:m-5 phone:pt-3">
+    <div class="card" v-if="!donationResult">
       <div>
         <DonateForm :onDonate="handleDonate" />
       </div>
     </div>
     <div v-else>
-      <div class="DonateField">
+      <div class="card">
         <DonateResult :result="donationResult" />
       </div>
     </div>
@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import DonateForm from '@/components/donate/DonateForm.vue'
-import DonateResult from '@/components/donate/DonateCheckout.vue'
+import DonateForm from '@/components/donate/DonateFormComponent.vue'
+import DonateResult from '@/components/donate/DonateCheckoutComponent.vue'
 import axios from 'axios'
 
 export default defineComponent({
@@ -40,11 +40,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped>
-.DonateField {
-  max-width: 700px;
-  width: 100%;
-  @apply bg-white p-4 drop-shadow rounded;
-}
-</style>
