@@ -14,31 +14,51 @@ body {
 }
 
 .text {
-  font-family: "Poppins", serif;
+  font-family: 'Poppins', serif;
   font-weight: 400;
-  font-style: normal;
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: "Poppins", serif;
+h1,
+h2 {
+  font-family: 'Poppins', serif;
   font-weight: 600;
-  font-style: normal;
 }
 
 /* 
 ===================================
-          FORM STYLE HERE!
+          COMPONENT STYLE
 ===================================
 */
-
-div.form-content{
-  @apply text-black py-4 px-4
+.card {
+  @apply flex pt-5 pb-5 justify-center;
 }
 
-div.form-content input, div.form-content textarea {
-  @apply w-full px-4 py-2 text-gray-600 drop-shadow ring-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 transition
+/* 
+===================================
+            FORM STYLE
+===================================
+*/
+div.form-content {
+  @apply text-black py-1 px-1;
+}
+
+div.form-content h1 {
+  @apply text-xl font-bold mb-4;
+}
+
+div.form-content div.form-group {
+  @apply mb-4;
 }
 
 div.form-content label {
-  @apply block text font-medium mb-2
+  @apply block text font-medium mb-2;
+}
+
+div.form-content input,
+div.form-content textarea {
+  @apply w-full text px-4 py-2 text-gray-600 drop-shadow ring-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-gray-400 transition;
+}
+
+div.form-content button {
+  @apply w-full py-2 bg-black text-gray-100 font-semibold rounded hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600;
 }
