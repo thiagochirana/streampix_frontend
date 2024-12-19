@@ -2,7 +2,7 @@
   <div class="form-content w-auto max-w-96">
     <h1 class="text-center">Thanks, agora me pague!</h1>
 
-    <div class="" v-html="result.qr_code_svg"></div>
+    <div v-html="result.qr_code_svg"></div>
 
     <br />
 
@@ -28,7 +28,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, onBeforeUnmount } from 'vue'
+import CableService from '@/services/CableService'
 import Toast from '@/services/ToastsService'
 
 export default defineComponent({
@@ -44,12 +45,33 @@ export default defineComponent({
       navigator.clipboard
         .writeText(textToCopy)
         .then(() => {
-          Toast.ok('Chave Copia e Cola foi copiado!')
+          Toast.ok('Chave Copia e Cola foi copiada!')
         })
         .catch(() => {
-          Toast.error('Houve um erro ao tentar copiar a chave Copia e Cola')
+          Toast.error('Erro ao copiar a chave Copia e Cola')
         })
     },
+  },
+  mounted() {
+    this.subscription = CableService.consumer.subscriptions.create(
+      {
+        channel: 'PaymentStatusChannel',
+        donate_id: this.result.donate_id,
+      },
+      {
+        received: (data) => {
+          if (data === 'paid') {
+            Toast.ok('Pagamento confirmado!')
+            this.$emit('paymentConfirmed')
+          }
+        },
+      },
+    )
+  },
+  beforeUnmount() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   },
 })
 </script>

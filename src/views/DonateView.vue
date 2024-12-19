@@ -5,9 +5,15 @@
         <DonateForm :onDonate="handleDonate" />
       </div>
     </div>
+    <div v-else-if="!paymentConfirmed">
+      <div class="card">
+        <DonateResult :result="donationResult" @paymentConfirmed="handlePaymentConfirmed" />
+      </div>
+    </div>
     <div v-else>
       <div class="card">
-        <DonateResult :result="donationResult" />
+        <h2 class="text-center text-green-500">Obrigado! Pagamento Confirmado!</h2>
+        <!-- Adicione mais detalhes aqui -->
       </div>
     </div>
   </div>
@@ -24,6 +30,7 @@ export default defineComponent({
   data() {
     return {
       donationResult: null as any,
+      paymentConfirmed: false,
     }
   },
   methods: {
@@ -36,6 +43,9 @@ export default defineComponent({
       } catch (error) {
         console.error('Donation failed:', error)
       }
+    },
+    handlePaymentConfirmed() {
+      this.paymentConfirmed = true
     },
   },
 })
