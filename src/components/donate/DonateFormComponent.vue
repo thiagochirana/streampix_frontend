@@ -1,6 +1,8 @@
 <template>
   <div class="form-content">
     <h1 class="text-center">Apoia o DevCurumin aí!</h1>
+    <h5 class="text-center italic text-gray-400">{{ randomTitle() }}</h5>
+    <br />
     <form @submit.prevent="submitForm">
       <div class="form-group">
         <label for="nickname">Nickname:</label>
@@ -8,7 +10,14 @@
       </div>
       <div class="form-group">
         <label for="value">Value:</label>
-        <input id="value" type="number" step="0.01" v-model="form.value" required />
+        <input
+          id="value"
+          type="number"
+          step="0.01"
+          v-model="form.value"
+          @input="validateInput"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="message">Message:</label>
@@ -41,6 +50,29 @@ export default defineComponent({
   methods: {
     submitForm() {
       this.onDonate(this.form)
+    },
+    validateInput() {
+      let formattedValue = this.form.value.replace(/[^0-9,]/g, '')
+      // formattedValue = formattedValue.replace(',', '.')
+
+      const regex = /^(\d+(\.\d{0,2})?)$/
+      if (!regex.test(formattedValue)) {
+        formattedValue = formattedValue.slice(0, formattedValue.length - 1)
+      }
+
+      this.form.value = formattedValue
+    },
+    randomTitle() {
+      const phrases = [
+        'Cincão no Pix agora, manda ver!',
+        'Doe para o dev mais indío que existe',
+        'Sem miséria, falou?',
+        '50ntão e você estará no meu coração ♥️',
+        '100nzão e você estará no meu coração ♥️',
+      ]
+
+      const ind: number = Math.floor(Math.random() * phrases.length)
+      return phrases[ind]
     },
   },
 })
