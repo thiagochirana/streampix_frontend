@@ -63,7 +63,7 @@ export default defineComponent({
         received: (data) => {
           if (data === 'paid') {
             Toast.ok('Pagamento confirmado!')
-            
+            this.$emit('paymentConfirmed')
           }
         },
       },

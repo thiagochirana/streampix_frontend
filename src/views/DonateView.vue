@@ -7,7 +7,7 @@
     </div>
     <div v-else-if="!paymentConfirmed">
       <div class="card">
-        <DonateResult :result="donationResult" @paymentConfirmed="handlePaymentConfirmed" />
+        <DonateResult :result="donationResult" @paymentConfirmed="paymentConfirmed = true" />
       </div>
     </div>
     <div v-else>
@@ -26,7 +26,7 @@ import DonateThanks from '@/components/donate/DonateThanksComponent.vue'
 import axios from 'axios'
 
 export default defineComponent({
-  components: { DonateForm, DonateResult },
+  components: { DonateForm, DonateResult, DonateThanks },
   data() {
     return {
       donationResult: null as any,
