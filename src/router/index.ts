@@ -1,4 +1,6 @@
 import DonateView from '@/views/DonateView.vue'
+import AdminView from '@/views/AdminView.vue'
+import SessionView from '@/views/SessionView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -6,8 +8,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: DonateView
-    }
+      component: DonateView,
+    },
+    {
+      path: '/admin',
+      component: AdminView,
+    },
+    {
+      path: '/you',
+      component: SessionView,
+    },
   ],
 })
 
