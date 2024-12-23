@@ -53,7 +53,8 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.subscription = CableService.consumer.subscriptions.create(
+    const cable = CableService.createConsumer(this.result.donate_id)
+    this.subscription = cable.subscriptions.create(
       {
         channel: 'PaymentStatusChannel',
         donate_id: this.result.donate_id,
@@ -62,7 +63,7 @@ export default defineComponent({
         received: (data) => {
           if (data === 'paid') {
             Toast.ok('Pagamento confirmado!')
-            this.$emit('paymentConfirmed')
+            
           }
         },
       },
