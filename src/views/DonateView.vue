@@ -12,8 +12,7 @@
     </div>
     <div v-else>
       <div class="card">
-        <h2 class="text-center text-green-500">Obrigado! Pagamento Confirmado!</h2>
-        <!-- Adicione mais detalhes aqui -->
+        <DonateThanks />
       </div>
     </div>
   </div>
@@ -23,6 +22,7 @@
 import { defineComponent } from 'vue'
 import DonateForm from '@/components/donate/DonateFormComponent.vue'
 import DonateResult from '@/components/donate/DonateCheckoutComponent.vue'
+import DonateThanks from '@/components/donate/DonateThanksComponent.vue'
 import axios from 'axios'
 
 export default defineComponent({

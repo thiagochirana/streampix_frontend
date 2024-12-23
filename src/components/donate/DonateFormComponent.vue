@@ -1,6 +1,6 @@
 <template>
   <div class="form-content">
-    <h1 class="text-center">Apoia o DevCurumin aí!</h1>
+    <h1 class="text-center">Apoie o DevCurumin aí!</h1>
     <h5 class="text-center italic text-gray-400">{{ randomTitle() }}</h5>
     <br />
     <form @submit.prevent="submitForm">

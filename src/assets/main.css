@@ -5,7 +5,32 @@
 @tailwind utilities;
 
 body {
+  @apply bg-gray-100
+}
+
+/* BACKGROUNDS */
+.bgd-granito {
   @apply bg-slate-800;
+}
+
+.bgd-blue {
+  @apply bg-blue-900;
+}
+
+.bgd-red {
+  @apply bg-red-600
+}
+
+.bgd-ruby {
+  @apply bg-red-900
+}
+
+.bgd-js {
+  @apply bg-yellow-400
+}
+
+.bgd-rust {
+  @apply bg-orange-500
 }
 
 .text {
