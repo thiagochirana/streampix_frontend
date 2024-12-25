@@ -25,7 +25,7 @@ import DonateForm from '@/components/donate/DonateFormComponent.vue'
 import DonateResult from '@/components/donate/DonateCheckoutComponent.vue'
 import DonateThanks from '@/components/donate/DonateThanksComponent.vue'
 import DonateUnavailable from '@/components/donate/DonateUnavaliableComponent.vue'
-import Back from '@/services/BackendService'
+import ApiBackend from '@/services/BackendService'
 import Toast from '@/services/ToastsService'
 
 export default defineComponent({
@@ -39,18 +39,26 @@ export default defineComponent({
   },
   methods: {
     async handleDonate(formData: any) {
-      Back.BackEndV1('post', '/donates', formData, false)
-        .then((r) => {
-          this.donationResult = r.data
-          console.log(this.donationResult)
-          localStorage.setItem('donateInProgress', this.donationResult.donate_id)
+      // first, check if API is on
+      ApiBackend.Root('get', '/up', null)
+        .then(() => {
+          // so, do a request
+          ApiBackend.V1('post', '/donates', formData, false)
+            .then((r) => {
+              this.donationResult = r.data
+              console.log(this.donationResult)
+              localStorage.setItem('donateInProgress', this.donationResult.donate_id)
+            })
+            .catch((e) => {
+              Toast.error(e.request.response)
+            })
         })
-        .catch((e) => {
-          Toast.error(e.request.response)
+        .catch(() => {
+          this.backendUp = false
         })
     },
     async checkBackend() {
-      Back.BackEnd('get', '/up', null, false)
+      ApiBackend.Root('get', '/up', null)
         .then((r) => {
           this.backendUp = true
           console.log('Conectado!')

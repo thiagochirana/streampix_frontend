@@ -24,7 +24,7 @@ Api.interceptors.request.use((config) => {
   return config
 })
 
-const BackEndV1 = (method, route, data = {}, requireAuth = true) => {
+const V1 = (method, route, data = {}, requireAuth = true) => {
   const url = '/backend/v1' + route
   return Api({
     method,
@@ -36,7 +36,7 @@ const BackEndV1 = (method, route, data = {}, requireAuth = true) => {
   })
 }
 
-const BackEnd = (method, url, data = {}, requireAuth = true) => {
+const Root = (method, url, data = {}, requireAuth = false) => {
   return Api({
     method,
     url,
@@ -48,6 +48,6 @@ const BackEnd = (method, url, data = {}, requireAuth = true) => {
 }
 
 export default {
-  BackEndV1,
-  BackEnd,
+  V1,
+  Root,
 }
