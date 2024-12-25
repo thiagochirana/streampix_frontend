@@ -1,8 +1,13 @@
 import { createConsumer } from '@rails/actioncable'
 
 const CableService = {
-  createConsumer(donateId: string) {
-    return createConsumer(`ws://localhost:3000/cable?donate_id=${donateId}`)
+  createConsumerDonate(donateId: string) {
+    return createConsumer(`${import.meta.env.VITE_BACKEND_API_URL}/cable?donate_id=${donateId}`)
+  },
+  createConsumerAlert(alertAccessKey: string) {
+    return createConsumer(
+      `${import.meta.env.VITE_BACKEND_WS_URL}/cable?alert_access_key=${alertAccessKey}`,
+    )
   },
 }
 

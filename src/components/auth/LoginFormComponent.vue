@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import BackEnd from '@/services/BackendService'
+import BackEndV1 from '@/services/BackendService'
 import Toast from '@/services/ToastsService'
 
 export default defineComponent({
@@ -41,7 +41,7 @@ export default defineComponent({
       this.showPassword = !this.showPassword
     },
     submitForm() {
-      BackEnd('post', '/auth/login', this.form, false)
+      BackEndV1('post', '/auth/login', this.form, false)
         .then((r) => {
           console.log(r)
           Toast.ok(r.data.message)
