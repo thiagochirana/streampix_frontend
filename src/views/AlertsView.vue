@@ -33,7 +33,10 @@ export default defineComponent({
         alert_access_key: alertKey,
       },
       {
-        received: (data) => handleAlert(data),
+        received: (data) => {
+          console.log(`data received: ${data}`)
+          this.handleAlert(data)
+        },
       },
     )
   },
