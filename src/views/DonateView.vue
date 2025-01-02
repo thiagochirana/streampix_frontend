@@ -1,20 +1,17 @@
 <template>
   <div class="flex justify-center pt-10 phone:m-5 phone:pt-3">
     <DonateUnavailable v-if="!backendUp" />
-    <div class="card" v-else-if="!donationResult">
+    <div v-else-if="!donationResult">
       <div>
         <DonateForm :onDonate="handleDonate" />
+        <DonateTable></DonateTable>
       </div>
     </div>
     <div v-else-if="!paymentConfirmed">
-      <div class="card">
-        <DonateResult :result="donationResult" @paymentConfirmed="paymentConfirmed = true" />
-      </div>
+      <DonateResult :result="donationResult" @paymentConfirmed="paymentConfirmed = true" />
     </div>
     <div v-else>
-      <div class="card">
-        <DonateThanks />
-      </div>
+      <DonateThanks />
     </div>
   </div>
 </template>
@@ -25,11 +22,12 @@ import DonateForm from '@/components/donate/DonateFormComponent.vue'
 import DonateResult from '@/components/donate/DonateCheckoutComponent.vue'
 import DonateThanks from '@/components/donate/DonateThanksComponent.vue'
 import DonateUnavailable from '@/components/donate/DonateUnavaliableComponent.vue'
+import DonateTable from '@/components/donate/DonateTableDonationsMonthComponent.vue'
 import ApiBackend from '@/services/BackendService'
 import Toast from '@/services/ToastsService'
 
 export default defineComponent({
-  components: { DonateForm, DonateResult, DonateThanks, DonateUnavailable },
+  components: { DonateForm, DonateResult, DonateThanks, DonateUnavailable, DonateTable },
   data() {
     return {
       donationResult: null as any,

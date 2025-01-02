@@ -1,30 +1,25 @@
 <template>
-  <div class="form-content">
-    <h1 class="text-center">Apoie o DevCurumin aí!</h1>
-    <h5 class="text-center italic text-gray-400">{{ randomTitle() }}</h5>
-    <br />
-    <form @submit.prevent="submitForm">
-      <div class="form-group">
-        <label for="nickname">Nickname:</label>
-        <input id="nickname" v-model="form.nickname" required />
-      </div>
-      <div class="form-group">
-        <label for="value">Value:</label>
-        <input
-          id="value"
-          type="number"
-          step="0.01"
-          v-model="form.value"
-          @input="validateInput"
-          required
-        />
-      </div>
-      <div class="form-group">
-        <label for="message">Message:</label>
-        <textarea id="message" v-model="form.message" required></textarea>
-      </div>
-      <button type="submit">Donate</button>
-    </form>
+  <div class="card">
+    <div class="form-content">
+      <h1 class="text-center">Apoie o DevCurumin aí!</h1>
+      <h5 class="text-center italic text-gray-400">{{ randomTitle() }}</h5>
+      <br />
+      <form @submit.prevent="submitForm">
+        <div class="form-group">
+          <label for="nickname">Seu Nickname:</label>
+          <input id="nickname" v-model="form.nickname" required />
+        </div>
+        <div class="form-group">
+          <label for="value">Valor (R$):</label>
+          <input id="value" type="text" v-model="form.value" @input="validateInput" required />
+        </div>
+        <div class="form-group">
+          <label for="message">Mensagem para Live:</label>
+          <textarea id="message" v-model="form.message" required></textarea>
+        </div>
+        <button type="submit">Donate</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -42,7 +37,7 @@ export default defineComponent({
     return {
       form: {
         nickname: '',
-        value: 0,
+        value: '',
         message: '',
       },
     }
@@ -52,15 +47,17 @@ export default defineComponent({
       this.onDonate(this.form)
     },
     validateInput() {
-      let formattedValue = this.form.value.replace(/[^0-9,]/g, '')
-      // formattedValue = formattedValue.replace(',', '.')
+      const formattedValue = this.form.value
+        .replace(/[^0-9,]/g, '')
+        .replace(/,+/g, ',')
+        .replace(/,(?=.*,)/g, '')
 
-      const regex = /^(\d+(\.\d{0,2})?)$/
-      if (!regex.test(formattedValue)) {
-        formattedValue = formattedValue.slice(0, formattedValue.length - 1)
+      const parts = formattedValue.split(',')
+      if (parts.length > 1) {
+        parts[1] = parts[1].slice(0, 2)
       }
 
-      this.form.value = formattedValue
+      this.form.value = parts.join(',')
     },
     randomTitle() {
       const phrases = [

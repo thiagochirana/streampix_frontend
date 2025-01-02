@@ -1,29 +1,31 @@
 <template>
-  <div class="form-content w-auto max-w-96">
-    <h1 class="text-center">Thanks, agora me pague!</h1>
+  <div class="card">
+    <div class="form-content w-auto max-w-96">
+      <h1 class="text-center">Thanks, agora me pague!</h1>
 
-    <div v-html="result.qr_code_svg"></div>
+      <div v-html="result.qr_code_svg"></div>
 
-    <br />
+      <br />
 
-    <span class="text-sm italic text-gray-400">
-      Scaneie o QrCode acima ou copie a chave Copia e Cola
-    </span>
+      <span class="text-sm italic text-gray-400">
+        Scaneie o QrCode acima ou copie a chave Copia e Cola
+      </span>
 
-    <label for="pix-copia-cola" class="label">Pix Copia e Cola:</label>
+      <label for="pix-copia-cola" class="label">Pix Copia e Cola:</label>
 
-    <textarea
-      id="pix-copia-cola"
-      type="text"
-      class="input"
-      :value="result.pix_copia_cola"
-      readonly
-      @click="copyToClipboard"
-    />
+      <textarea
+        id="pix-copia-cola"
+        type="text"
+        class="input"
+        :value="result.pix_copia_cola"
+        readonly
+        @click="copyToClipboard"
+      />
 
-    <span class="text-sm italic text-gray-400 text-center justify-center">
-      Clique na caixa de texto acima e será copiado automaticamente
-    </span>
+      <span class="text-sm italic text-gray-400 text-center justify-center">
+        Clique na caixa de texto acima e será copiado automaticamente
+      </span>
+    </div>
   </div>
 </template>
 
