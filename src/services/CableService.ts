@@ -6,7 +6,7 @@ const CableService = {
   },
   createConsumerAlert(alertAccessKey: string) {
     return createConsumer(
-      `${import.meta.env.VITE_BACKEND_WS_URL}/cable?alert_id=${alertAccessKey}`,
+      `${import.meta.env.VITE_BACKEND_WS_URL}/cable?alert_access_key=${alertAccessKey}`,
     )
   },
 }

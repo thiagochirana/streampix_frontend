@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import AlertService from '@/services/AlertService'
+import CableService from '@/services/CableService'
 
 export default defineComponent({
   data() {
@@ -20,16 +20,27 @@ export default defineComponent({
         message: '',
       },
       showAlert: false,
-      audio: new Audio('/alert-sound.mp3'), // Adicione o som no diretório public
+      audio: new Audio('/alert-sound.mp3'),
     }
   },
   mounted() {
-    const alertKey = this.$route.params.alert_access_key // Obtém a chave da URL
-    const service = new AlertService(alertKey, this.handleAlert)
+    const alertKey = this.$route.query.key
+    const cable = CableService.createConsumerAlert(alertKey)
 
-    this.$once('hook:beforeUnmount', () => {
-      service.unsubscribe()
-    })
+    this.subscription = cable.subscriptions.create(
+      {
+        channel: 'DonationAlertChannel',
+        alert_access_key: alertKey,
+      },
+      {
+        received: (data) => handleAlert(data),
+      },
+    )
+  },
+  beforeUnmount() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   },
   methods: {
     handleAlert(data: any) {
@@ -45,7 +56,7 @@ export default defineComponent({
       setTimeout(() => {
         this.showAlert = false
         this.clearAlert()
-      }, 5000)
+      }, 15000)
     },
     clearAlert() {
       this.alert = {
@@ -71,7 +82,8 @@ export default defineComponent({
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
