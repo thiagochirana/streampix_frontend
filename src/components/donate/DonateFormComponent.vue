@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <div class="form-content">
+    <div class="form-content w-80">
       <h1 class="text-center">Apoie o DevCurumin aí!</h1>
-      <h5 class="text-center italic text-gray-400">{{ randomTitle() }}</h5>
+      <p class="text-center italic text-gray-400 text-wrap">{{ randomTitle() }}</p>
       <br />
       <form @submit.prevent="submitForm">
         <div class="form-group">
