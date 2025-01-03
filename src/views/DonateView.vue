@@ -38,7 +38,7 @@ export default defineComponent({
   methods: {
     async handleDonate(formData: any) {
       // first, check if API is on
-      ApiBackend.Root('get', '/up', null)
+      ApiBackend.Root('get', '/up', {})
         .then(() => {
           // so, do a request
           ApiBackend.V1('post', '/donates', formData, false)
@@ -56,7 +56,7 @@ export default defineComponent({
         })
     },
     async checkBackend() {
-      ApiBackend.Root('get', '/up', null)
+      ApiBackend.Root('get', '/up', {})
         .then((r) => {
           this.backendUp = true
           console.log('Conectado!')
