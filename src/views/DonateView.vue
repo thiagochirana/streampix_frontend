@@ -2,9 +2,9 @@
   <div class="flex justify-center pt-10 phone:m-5 phone:pt-3">
     <DonateUnavailable v-if="!backendUp" />
     <div v-else-if="!donationResult">
-      <div>
+      <div class="">
         <DonateForm :onDonate="handleDonate" />
-        <DonateTable></DonateTable>
+        <DonateTable class="mt-4" />
       </div>
     </div>
     <div v-else-if="!paymentConfirmed">

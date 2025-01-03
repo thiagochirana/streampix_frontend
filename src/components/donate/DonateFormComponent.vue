@@ -72,5 +72,8 @@ export default defineComponent({
       return phrases[ind]
     },
   },
+  mounted(){
+    document.title = 'Apoie o DevCurumin!';
+  }
 })
 </script>

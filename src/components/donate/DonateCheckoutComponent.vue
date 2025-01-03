@@ -55,6 +55,7 @@ export default defineComponent({
     },
   },
   mounted() {
+    document.title = 'Agora Pague!'
     const cable = CableService.createConsumerDonate(this.result.donate_id)
     this.subscription = cable.subscriptions.create(
       {

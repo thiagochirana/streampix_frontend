@@ -4,9 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-}
-
 /* BACKGROUNDS */
 .bgd-granito {
   @apply bg-slate-800;
@@ -17,19 +14,19 @@ body {
 }
 
 .bgd-red {
-  @apply bg-red-600
+  @apply bg-red-600;
 }
 
 .bgd-ruby {
-  @apply bg-red-900
+  @apply bg-red-900;
 }
 
 .bgd-js {
-  @apply bg-yellow-400
+  @apply bg-yellow-400;
 }
 
 .bgd-rust {
-  @apply bg-orange-500
+  @apply bg-orange-500;
 }
 
 .text {
