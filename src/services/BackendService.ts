@@ -24,7 +24,7 @@ Api.interceptors.request.use((config) => {
   return config
 })
 
-const V1 = (method, route, data = {}, requireAuth = true) => {
+const V1 = (method: string, route: string, data = {}, requireAuth = true) => {
   const url = '/backend/v1' + route
   return Api({
     method,
@@ -36,7 +36,7 @@ const V1 = (method, route, data = {}, requireAuth = true) => {
   })
 }
 
-const Root = (method, url, data = {}, requireAuth = false) => {
+const Root = (method: string, url: string, data = {}, requireAuth = false) => {
   return Api({
     method,
     url,

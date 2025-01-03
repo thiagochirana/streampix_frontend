@@ -30,6 +30,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import CableService from '@/services/CableService'
+import type { Subscription } from '@rails/actioncable'
 
 export default defineComponent({
   data() {
@@ -42,10 +43,14 @@ export default defineComponent({
       },
       showAlert: false,
       audio: new Audio('/alert-sound.mp3'),
+      subscription: null as Subscription | null,
     }
   },
   mounted() {
-    const alertKey = this.$route.query.key
+    const alertKey = Array.isArray(this.$route.query.key)
+      ? this.$route.query.key[0] + ''
+      : this.$route.query.key || ''
+
     const cable = CableService.createConsumerAlert(alertKey)
 
     this.subscription = cable.subscriptions.create(
@@ -54,8 +59,7 @@ export default defineComponent({
         alert_access_key: alertKey,
       },
       {
-        received: (data) => {
-          console.log(`data received: ${data}`)
+        received: (data: { nickname: string; value: number; message: string }) => {
           this.handleAlert(data)
         },
       },
@@ -67,7 +71,7 @@ export default defineComponent({
     }
   },
   methods: {
-    handleAlert(data: any) {
+    handleAlert(data: { nickname: string; value: number; message: string }) {
       this.alert = {
         nickname: data.nickname,
         value: data.value,

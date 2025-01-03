@@ -30,11 +30,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onBeforeUnmount } from 'vue'
+import { defineComponent } from 'vue'
 import CableService from '@/services/CableService'
 import Toast from '@/services/ToastsService'
+import type { Subscription } from '@rails/actioncable';
 
 export default defineComponent({
+  data() {
+    return {
+      subscription: null as Subscription | null,
+    }
+  },
   props: {
     result: {
       type: Object,
@@ -63,7 +69,7 @@ export default defineComponent({
         donate_id: this.result.donate_id,
       },
       {
-        received: (data) => {
+        received: (data: string) => {
           if (data === 'paid') {
             Toast.ok('Pagamento confirmado!')
             localStorage.removeItem('donateInProgress')
