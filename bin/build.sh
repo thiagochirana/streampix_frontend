@@ -1,7 +1,11 @@
 #!/bin/bash
 rm -rf dist
 
+git fetch && git pull
+
 pm2 stop all && pm2 delete all
+
+npm run build
 
 cd dist/
 
