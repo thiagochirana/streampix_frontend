@@ -44,7 +44,6 @@ export default defineComponent({
           ApiBackend.V1('post', '/donates', formData, false)
             .then((r) => {
               this.donationResult = r.data
-              console.log(this.donationResult)
               localStorage.setItem('donateInProgress', this.donationResult.donate_id)
             })
             .catch((e) => {
@@ -57,11 +56,10 @@ export default defineComponent({
     },
     async checkBackend() {
       ApiBackend.Root('get', '/up', {})
-        .then((r) => {
+        .then(() => {
           this.backendUp = true
-          console.log('Conectado!')
         })
-        .catch((e) => {
+        .catch(() => {
           this.backendUp = false
         })
     },

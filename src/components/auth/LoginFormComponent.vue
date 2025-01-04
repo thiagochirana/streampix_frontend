@@ -43,7 +43,6 @@ export default defineComponent({
     submitForm() {
       ApiBackend.V1('post', '/auth/login', this.form, false)
         .then((r) => {
-          console.log(r)
           Toast.ok(r.data.message)
         })
         .catch((error) => {
