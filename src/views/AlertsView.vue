@@ -51,6 +51,8 @@ export default defineComponent({
       ? this.$route.query.key[0] + ''
       : this.$route.query.key || ''
 
+    console.log(alertKey)
+
     const cable = CableService.createConsumerAlert(alertKey)
 
     this.subscription = cable.subscriptions.create(
