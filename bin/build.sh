@@ -9,5 +9,5 @@ npm run build
 
 cd dist/
 
-# pm2 start "http-server ./ -p 5000 --spa"
-pm2 start "serve -s dist -l 5000"
+pm2 start "http-server ./ -p 5000 --spa"
+# pm2 start "serve -s dist -l 5000"
