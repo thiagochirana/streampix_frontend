@@ -2,10 +2,10 @@ import DonateView from '@/views/DonateView.vue'
 import AdminView from '@/views/AdminView.vue'
 import SessionView from '@/views/SessionView.vue'
 import AlertsView from '@/views/AlertsView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createMemoryHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
