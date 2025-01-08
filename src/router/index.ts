@@ -5,7 +5,7 @@ import AlertsView from '@/views/AlertsView.vue'
 import { createRouter, createMemoryHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createMemoryHistory(import.meta.env.BASE_URL),
+  history: createMemoryHistory(),
   routes: [
     {
       path: '/',
