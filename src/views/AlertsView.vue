@@ -40,9 +40,11 @@ export default defineComponent({
         value: 0,
         message: '',
         classBg: '',
+        audio_donate: null as string | null,
       },
       showAlert: false,
-      audio: new Audio('/alert-sound.mp3'),
+      alertSound: new Audio('/alert-sound.mp3'),
+      donateAudio: new Audio(),
       subscription: null as Subscription | null,
     }
   },
@@ -50,19 +52,52 @@ export default defineComponent({
     const alertKey = Array.isArray(this.$route.query.key)
       ? this.$route.query.key[0] + ''
       : this.$route.query.key || ''
-
-    console.log(alertKey)
-
+    
     const cable = CableService.createConsumerAlert(alertKey)
-
     this.subscription = cable.subscriptions.create(
       {
         channel: 'DonationAlertChannel',
         alert_access_key: alertKey,
       },
       {
-        received: (data: { nickname: string; value: number; message: string }) => {
-          this.handleAlert(data)
+        received: (data: {
+          nickname: string
+          value: number
+          message: string
+          audio_donate: string
+        }) => {
+          // Primeiro configuramos o áudio da doação
+          try {
+            const audioData = atob(data.audio_donate)
+            const arrayBuffer = new ArrayBuffer(audioData.length)
+            const uint8Array = new Uint8Array(arrayBuffer)
+            
+            for (let i = 0; i < audioData.length; i++) {
+              uint8Array[i] = audioData.charCodeAt(i)
+            }
+            
+            const audioBlob = new Blob([uint8Array], { type: 'audio/mp3' })
+            const audioUrl = URL.createObjectURL(audioBlob)
+            
+            // Configurar o áudio da doação
+            this.donateAudio = new Audio()
+            this.donateAudio.src = audioUrl
+            
+            // Garantir que o áudio está carregado
+            this.donateAudio.load()
+            
+            // Configurar o encadeamento após o alerta
+            this.alertSound.onended = () => {
+              console.log('Alert sound ended, playing donate audio')
+              this.donateAudio.play().catch(e => console.error('Error playing donate audio:', e))
+            }
+            
+            // Agora podemos mostrar o alerta e iniciar a sequência
+            this.handleAlert(data)
+            
+          } catch (error) {
+            console.error('Error processing audio:', error)
+          }
         },
       },
     )
@@ -71,19 +106,24 @@ export default defineComponent({
     if (this.subscription) {
       this.subscription.unsubscribe()
     }
+    this.alertSound.onended = null
+    this.donateAudio.pause()
+    this.alertSound.pause()
   },
   methods: {
-    handleAlert(data: { nickname: string; value: number; message: string }) {
+    handleAlert(data: { nickname: string; value: number; message: string; audio_donate: string }) {
       this.alert = {
         nickname: data.nickname,
         value: data.value,
         message: data.message,
         classBg: this.randomBgColor(),
+        audio_donate: data.audio_donate,
       }
-
-      this.audio.play()
+      
+      // Tocar o som de alerta
+      this.alertSound.play().catch(e => console.error('Error playing alert sound:', e))
+      
       this.showAlert = true
-
       setTimeout(() => {
         this.showAlert = false
         this.clearAlert()
@@ -95,6 +135,11 @@ export default defineComponent({
         value: 0,
         message: '',
         classBg: '',
+        audio_donate: null,
+      }
+      // Limpar URL do objeto
+      if (this.donateAudio.src) {
+        URL.revokeObjectURL(this.donateAudio.src)
       }
     },
     randomBgColor() {

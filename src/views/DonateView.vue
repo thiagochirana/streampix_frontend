@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center pt-10 phone:m-5 phone:pt-3">
+  <div class="flex justify-center pt-10 sm:pt-10 h-screen bg-purple-900">
     <DonateUnavailable v-if="!backendUp" />
     <div v-else-if="!donationResult">
       <div class="">
