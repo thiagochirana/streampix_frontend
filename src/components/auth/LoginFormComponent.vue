@@ -25,6 +25,8 @@
 import { defineComponent } from 'vue'
 import ApiBackend from '@/services/BackendService'
 import Toast from '@/services/ToastsService'
+import { useSessionStore } from '@/store/auth.store'
+import router from '@/router'
 
 export default defineComponent({
   data() {
@@ -44,6 +46,17 @@ export default defineComponent({
       ApiBackend.V1('post', '/auth/login', this.form, false)
         .then((r) => {
           Toast.ok(r.data.message)
+          const sessionStore = useSessionStore()
+          sessionStore.login({
+            token: {
+              value: r.data.access_token,
+              type: r.data.token_type,
+            },
+            user: {
+              login: this.form.login,
+            },
+          })
+          router.push('/admin')
         })
         .catch((error) => {
           Toast.error(error.request.response)

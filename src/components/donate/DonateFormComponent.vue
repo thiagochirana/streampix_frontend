@@ -12,9 +12,10 @@
         <div class="form-group">
           <label for="value">Valor (R$):</label>
           <input id="value" type="text" v-model="form.value" @input="validateInput" required />
+          <span class="italic text-gray-400 text-wrap">Donates maiores que R$ 3 são lidos na live</span>
         </div>
         <div class="form-group">
-          <label for="message">Mensagem para Live:</label>
+          <label for="message">Sua Mensagem para Live:</label>
           <textarea id="message" v-model="form.message" maxlength="200" required></textarea>
         </div>
         <button type="submit">Donate</button>
@@ -47,7 +48,7 @@ export default defineComponent({
       if (newValue.length > 200) {
         this.form.message = newValue.slice(0, 200)
       }
-    }
+    },
   },
   methods: {
     submitForm() {
@@ -79,8 +80,8 @@ export default defineComponent({
       return phrases[ind]
     },
   },
-  mounted(){
-    document.title = 'Apoie o DevCurumin!';
-  }
+  mounted() {
+    document.title = 'Apoie o DevCurumin!'
+  },
 })
 </script>
