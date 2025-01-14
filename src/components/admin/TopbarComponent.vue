@@ -2,9 +2,9 @@
   <nav class="bg-white shadow border-gray-200">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="../../assets/logo.svg" class="h-8" alt="Flowbite Logo" />
+        <img src="../../../public/main.svg" class="h-8" alt="Flowbite Logo" />
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-black"
-          >Curumin Admin</span
+          >StreamPix</span
         >
       </a>
       <button
@@ -35,17 +35,14 @@
         <ul
           class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white"
         >
+          <!-- <li>
+            <a href="#" class="block py-2 px-3 text-gray-900 rounded md:border-0 md:p-0">Pricing</a>
+          </li> -->
           <li>
             <a
               href="#"
-              class="block py-2 px-3 text-gray-900 rounded md:border-0 md:p-0"
-              >Pricing</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 px-3 text-gray-900 rounded md:border-0 md:p-0"
+              v-on:click="logout"
+              class="block py-2 px-3 text-gray-900 rounded hover:text-blue-500 md:border-0 md:p-0 transition duration-150"
               >Sair</a
             >
           </li>
@@ -57,6 +54,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useSessionStore } from '@/store/auth.store'
+import router from '@/router'
 
-export default defineComponent({})
+export default defineComponent({
+  methods: {
+    logout() {
+      const sessionStore = useSessionStore()
+      sessionStore.logout()
+      router.push('/login')
+    },
+  },
+})
 </script>

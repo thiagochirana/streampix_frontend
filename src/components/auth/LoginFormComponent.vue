@@ -42,25 +42,26 @@ export default defineComponent({
     togglePassword() {
       this.showPassword = !this.showPassword
     },
-    submitForm() {
-      ApiBackend.V1('post', '/auth/login', this.form, false)
-        .then((r) => {
-          Toast.ok(r.data.message)
-          const sessionStore = useSessionStore()
-          sessionStore.login({
-            token: {
-              value: r.data.access_token,
-              type: r.data.token_type,
-            },
-            user: {
-              login: this.form.login,
-            },
-          })
-          router.push('/admin')
+    async submitForm() {
+      try {
+        const r = await ApiBackend.V1('post', '/auth/login', this.form, false)
+        Toast.ok(r.data.message)
+        const sessionStore = useSessionStore()
+        sessionStore.login({
+          token: {
+            value: r.data.access_token,
+            type: r.data.token_type,
+          },
+          user: {
+            login: this.form.login,
+          },
         })
-        .catch((error) => {
-          Toast.error(error.request.response)
-        })
+
+        console.log(sessionStore.$state)
+        router.push('/admin')
+      } catch (error) {
+        Toast.error(error.request.response)
+      }
     },
   },
 })

@@ -5,8 +5,6 @@ import AlertsView from '@/views/AlertsView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { useSessionStore } from '@/store/auth.store'
 
-const sessionStore = useSessionStore()
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -17,13 +15,26 @@ const router = createRouter({
     {
       path: '/admin',
       component: AdminView,
-      beforeEnter: () => {
-        return sessionStore.isLoggedIn;
+      beforeEnter: (to, from, next) => {
+        const sessionStore = useSessionStore()
+        if (sessionStore.isLoggedIn) {
+          next()
+        } else {
+          next('/login')
+        }
       },
     },
     {
       path: '/login',
       component: SessionView,
+      beforeEnter: (to, from, next) => {
+        const sessionStore = useSessionStore()
+        if (sessionStore.isLoggedIn) {
+          next('/admin')
+        } else {
+          next()
+        }
+      },
     },
     {
       path: '/alert',

@@ -1,4 +1,3 @@
-import { useSessionStore } from '@/store/auth.store'
 import axios from 'axios'
 
 const Api = axios.create({
@@ -8,9 +7,6 @@ const Api = axios.create({
   maxBodyLength: 100000000,
 })
 
-const sessionStore = useSessionStore()
-
-
 const getToken = () => {
   const token = localStorage.getItem('ACCESS_TOKEN')
   return token ? JSON.parse(token) : null
@@ -18,7 +14,7 @@ const getToken = () => {
 
 Api.interceptors.request.use((config) => {
   if (config.headers['Require-Auth'] !== false) {
-    const token = sessionStore.token || getToken()
+    const token = getToken()
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }

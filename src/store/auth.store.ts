@@ -39,4 +39,5 @@ export const useSessionStore = defineStore(SESSION_STORE, {
     isLoggedIn: (state) => state.authenticated && state.user,
     fullname: (state) => state.user?.name || '',
   },
+  persist: true,
 })
