@@ -15,7 +15,7 @@
         </div>
         <div class="form-group">
           <label for="message">Mensagem para Live:</label>
-          <textarea id="message" v-model="form.message" required></textarea>
+          <textarea id="message" v-model="form.message" maxlength="200" required></textarea>
         </div>
         <button type="submit">Donate</button>
       </form>
@@ -40,6 +40,13 @@ export default defineComponent({
         value: '',
         message: '',
       },
+    }
+  },
+  watch: {
+    'form.message'(newValue) {
+      if (newValue.length > 200) {
+        this.form.message = newValue.slice(0, 200)
+      }
     }
   },
   methods: {
